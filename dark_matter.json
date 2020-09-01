@@ -33,7 +33,7 @@
       "id": "background",
       "type": "background",
       "layout": {"visibility": "visible"},
-      "paint": {"background-color": "rgba(67, 66, 66, 1)"}
+      "paint": {"background-color": "rgba(255, 255, 255, 1)"}
     },
     {
       "id": "water",
@@ -45,8 +45,8 @@
         ["==", "$type", "Polygon"],
         ["!=", "brunnel", "tunnel"]
       ],
-      "layout": {"visibility": "visible"},
-      "paint": {"fill-antialias": false, "fill-color": "rgb(27 ,27 ,29)"}
+      "layout": {"visibility": "none"},
+      "paint": {"fill-antialias": false, "fill-color": "rgba(173, 216, 230, 0.5)"}
     },
     {
       "id": "landcover_ice_shelf",
@@ -228,7 +228,7 @@
       "layout": {
         "line-cap": "round",
         "line-join": "round",
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "line-color": "#000",
@@ -543,7 +543,7 @@
         ["==", "$type", "LineString"],
         ["all", ["==", "class", "rail"], ["has", "service"]]
       ],
-      "layout": {"line-join": "round", "visibility": "visible"},
+      "layout": {"line-join": "round", "visibility": "none"},
       "paint": {
         "line-color": "rgb(12,12,12)",
         "line-dasharray": [3, 3],
@@ -723,7 +723,7 @@
         "text-offset": [0.5, 0],
         "text-size": 10,
         "text-transform": "uppercase",
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "text-color": "rgb(101,101,101)",
@@ -749,7 +749,7 @@
         "text-offset": [0.5, 0],
         "text-size": 10,
         "text-transform": "uppercase",
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "text-color": "rgb(101,101,101)",
@@ -776,7 +776,7 @@
         "text-offset": [0.5, 0.2],
         "text-size": 12,
         "text-transform": "none",
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "icon-opacity": 0.7,
@@ -805,7 +805,7 @@
         "text-offset": [0.5, 0.2],
         "text-size": 13,
         "text-transform": "none",
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "icon-opacity": 0.7,
@@ -871,15 +871,15 @@
         "text-font": ["Metropolis Regular", "Noto Sans Regular"],
         "text-justify": "left",
         "text-offset": [0.5, 0.2],
-        "text-size": 15,
+        "text-size": 12,
         "text-transform": "none",
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "icon-opacity": 0,
-        "text-color": "rgba(255, 255, 255, 1)",
+        "text-color": "rgba(155, 155, 155, 1)",
         "text-halo-blur": 1,
-        "text-halo-color": "#434242",
+        "text-halo-color": "rgba(255,255,255,0.7)",
         "text-halo-width": 2,
         "icon-color": "rgba(255, 254, 254, 1)"
       }
@@ -908,13 +908,13 @@
         "text-offset": [0.5, 0.2],
         "text-size": 16,
         "text-transform": "none",
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "icon-opacity": 0,
         "text-color": "rgba(255, 255, 255, 1)",
         "text-halo-blur": 1,
-        "text-halo-color": "#434242",
+        "text-halo-color": "rgba(255,255,255,0.7)",
         "text-halo-width": 2
       }
     },
@@ -936,7 +936,7 @@
       "paint": {
         "text-color": "rgb(101,101,101)",
         "text-halo-blur": 1,
-        "text-halo-color": "rgba(0,0,0,0.7)",
+        "text-halo-color": "rgba(255,255,255,0.7)",
         "text-halo-width": 1,
         "icon-color": "rgba(236, 231, 231, 1)"
       }
@@ -963,7 +963,7 @@
       },
       "paint": {
         "text-color": "rgb(101,101,101)",
-        "text-halo-color": "rgba(0,0,0,0.7)",
+        "text-halo-color": "rgba(255,255,255,0.7)",
         "text-halo-width": 1.4,
         "icon-color": "rgba(255, 255, 255, 1)"
       }
@@ -990,7 +990,7 @@
       },
       "paint": {
         "text-color": "rgb(101,101,101)",
-        "text-halo-color": "rgba(0,0,0,0.7)",
+        "text-halo-color": "rgba(255,255,255,0.7)",
         "text-halo-width": 1.4,
         "icon-color": "rgba(249, 249, 249, 1)"
       }
@@ -1020,7 +1020,7 @@
       },
       "paint": {
         "text-color": "rgb(101,101,101)",
-        "text-halo-color": "rgba(0,0,0,0.7)",
+        "text-halo-color": "rgba(255,255,255,0.7)",
         "text-halo-width": 1.4,
         "icon-color": "rgba(251, 246, 246, 1)"
       }
