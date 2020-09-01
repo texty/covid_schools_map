@@ -1,8 +1,8 @@
 /**
  * Created by yevheniia on 09.06.20.
  */
-var default_zoom = window.innerWidth > 800 ? 6 : 5;
-var min_zoom =  window.innerWidth > 800 ? 6 : 5;
+var default_zoom = window.innerWidth > 800 ? 5 : 5;
+var min_zoom =  window.innerWidth > 800 ? 5 : 5;
 var theTable;
 
 
@@ -10,12 +10,12 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZHJpbWFjdXMxODIiLCJhIjoiWGQ5TFJuayJ9.6sQHpjf_
 var map = new mapboxgl.Map({
     container: 'map',
     minZoom: default_zoom,
-    maxZoom: default_zoom,
+    maxZoom: default_zoom + 2,
     hash: false,
     tap: false,
     attributionControl: false,
     style: 'dark_matter.json',
-    center: [31.5, 48.5],
+    center: [31.5, 47.0],
     zoom: default_zoom // starting zoom
 });
 
@@ -74,10 +74,22 @@ d3.csv("data/TABLE.csv").then(function(data) {
             "source-layer": "schools_covid_4326",
             "paint": {
                 'fill-color': {
-                    property: 'Odesa_prob',
-                    stops: [[0, '#fff'], [0.003, 'yellow'], [0.004, "orange"], [0.005, "red"]]
+                    property: 'MAP_cleaned_infections1000',
+                    stops: [
+                        [-1, '#f0f0f0'],
+                        [0, '#ffffcc'],
+                        [1, '#ffeda0'],
+                        [2, "#fed976"],
+                        [3, "#feb24c"],
+                        [5, "#fd8d3c"],
+                        [8, "#fc4e2a"],
+                        [12, "#e31a1c"],
+                        [16, "#e31a1c"],
+                        [20, "#bd0026"],
+                        [23, "#800026"]
+                    ]
                 },
-                'fill-outline-color': 'lightgrey'
+                'fill-outline-color': '#f0f0f0'
             }
         }, firstSymbolId);
 
@@ -118,7 +130,19 @@ d3.csv("data/TABLE.csv").then(function(data) {
             "paint": {
                 'fill-color': {
                     property: 'KYIV_infections1000',
-                    stops: [[0, '#fff'], [1, 'yellow'], [3, "orange"], [5, "red"]]
+                    stops: [
+                        [-1, '#f0f0f0'],
+                        [0, '#ffffcc'],
+                        [1, '#ffeda0'],
+                        [2, "#fed976"],
+                        [3, "#feb24c"],
+                        [5, "#fd8d3c"],
+                        [8, "#fc4e2a"],
+                        [12, "#e31a1c"],
+                        [16, "#e31a1c"],
+                        [20, "#bd0026"],
+                        [23, "#800026"]
+                    ]
                 },
                 'fill-outline-color': 'grey'
             }
