@@ -24,12 +24,14 @@
         height: 100vh;
     }
 
-    #table {
+    #schools {
         width: 100%;
         margin: auto;
     }
 
-    #table_wrapper {
+
+
+    #schools_wrapper {
         width: 60%;
         margin: auto;
         /*//margin-top: 100px;*/
@@ -55,7 +57,45 @@
     #maps {
         margin: 50px 0;
         display: grid;
-        grid-template-columns: 3fr 2fr;
+        grid-template-columns: 3fr 3fr;
+
+    }
+
+    @media(max-width: 800px){
+        #schools_wrapper {
+            width: 90%;
+            margin: auto;
+        }
+
+        #schools {
+            display: block;
+        }
+
+        thead tr:nth-child(1){
+            display: none;
+        }
+
+        table tr, th, td {
+            display: block;
+        }
+
+        td:before {
+            content: attr(data-th) ": ";
+            font-weight: bold;
+            min-width: 120px !important;
+            display: inline-block;
+        }
+
+        th:before {
+            content: attr(data-th) ": ";
+            font-weight: bold;
+            min-width: 120px !important;
+            display: inline-block;
+        }
+
+        tbody > tr:nth-child(even) {
+            background-color: wheat !important;
+        }
 
     }
 </style>
@@ -84,8 +124,8 @@
 
 
 
-    <h2>Знайти свою школу / м. Київ</h2>
-    <table id="table"></table>
+    <h2>Знайти свою школу / <span id="clicked_region"></span></h2>
+    <table id="schools"></table>
 
 
 
