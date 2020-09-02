@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
-
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
     <link rel='stylesheet' href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" />
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.css'  type='text/css'/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -18,6 +18,13 @@
     <script type="text/javascript" src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.min.js"></script>
 </head>
 <style>
+
+    body {
+        margin: 0 auto;
+        padding: 0;
+        font-family: 'Open Sans', sans-serif;
+
+    }
 
     .container {
         width: 100%;
@@ -150,6 +157,17 @@
     .active {
         background: lightgrey;
     }
+
+    thead > tr:nth-child(1) {
+        display: none;
+    }
+
+    select#region-to-show {
+        font-size: 22px;
+        font-weight: bold;
+        font-family: 'Open Sans', sans-serif;
+
+    }
 </style>
 <body>
 
@@ -164,10 +182,7 @@
 
     <div id="maps">
 
-        <div class="col-2-3">
-            <h2>Знайти свою школу / <span id="clicked_region"></span></h2>
-            <table id="schools"></table>
-        </div>
+
 
         <div class="col-1-2">
             <!--<h3>Україна</h3>-->
@@ -190,8 +205,34 @@
                 <div class="map_button active" value="KYIV_infections1000">школи на 1000 учнів</div>
             </div>
         </div>
+    </div>
 
 
+
+    <div class="col-2-3">
+        <h2>Оберіть свою область:
+
+
+        <select id="region-to-show">
+            <option value="м. Київ">м. Київ</option>
+            <option value="Київська">Київська</option>
+            <option value="Одеська">Одеська</option>
+            <option value="Тернопільська">Тернопільська</option>
+        </select>
+        </h2>
+
+
+
+        <table id="schools">
+            <thead>
+            <tr>
+                <th>district</th>
+                <th>name</th>
+                <th>id</th>
+                <th>infected</th>
+            </tr>
+            </thead>
+        </table>
 
     </div>
 
