@@ -4,6 +4,7 @@
 var default_zoom = window.innerWidth > 800 ? 5 : 5;
 
 var stops_values = [
+    [-3, 'white'],
     [-1, 'grey'],
     [0, '#ffffcc'],
     [1, '#ffeda0'],
@@ -26,7 +27,7 @@ var map = new mapboxgl.Map({
     tap: false,
     attributionControl: false,
     style: 'dark_matter.json',
-    center: [31.5, 49.5],
+    center: [31.5, 48.5],
     zoom: default_zoom // starting zoom
 });
 
@@ -39,7 +40,7 @@ var map2 = new mapboxgl.Map({
     tap: false,
     attributionControl: false,
     style: 'dark_matter.json',
-    center: [30.5, 50.5],
+    center: [30.5, 50.4],
     zoom: 9 // starting zoom
 });
 
@@ -163,6 +164,7 @@ d3.csv("data/TABLE.csv").then(function(data) {
         pageLength: 10,
         order: [[3, "desc"]],
         responsive: true,
+        sortable: true,
         language: {
              "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Ukrainian.json"
         },
@@ -176,16 +178,22 @@ d3.csv("data/TABLE.csv").then(function(data) {
         ]
     });
 
+
     //додаємо дані в таблицю
     datatable.rows.add(initData).draw();
-    
+
+    // new $.fn.dataTable.Responsive( datatable, {
+    //     details: true
+    // } );
+
+
 
     $('#schools thead tr').clone(true).appendTo( '#schools thead' );
 
     // select option  в другу колонку
     $('#schools thead tr:eq(1) th:eq(0)').each(function (i) {
         var column = this;
-        var select = $('<select style="width:100%"><option value="" selected>Оберіть район</option></select>');
+        var select = $('<select style="width:100%"><option value="" selected>Обрати</option></select>');
         $(this).html( select );
         $( 'select', this ).on( 'change', function () {
             var val = $.fn.dataTable.util.escapeRegex(
@@ -198,8 +206,52 @@ d3.csv("data/TABLE.csv").then(function(data) {
         datatable.column(i).data().unique().each( function ( d) {
             select.append('<option value="'+d+'">'+d+'</option>')
         });
-    }); //end of select option
+    });
 
+    // select option  в другу колонку
+    $('#schools thead tr:eq(1) th:eq(3)').each(function (i) {
+        var column = this;
+        var select = $('<select style="width:100%"><option value="" selected>Обрати</option></select>');
+        $(this).html( select );
+        $( 'select', this ).on( 'change', function () {
+            var val = $.fn.dataTable.util.escapeRegex(
+                $(this).val()
+            );
+            datatable.column(3)
+                .search( this.value )
+                .draw();
+        });
+        datatable.column(3).data().unique().each( function ( d) {
+            select.append('<option value="'+d+'">'+d+'</option>')
+        });
+    });
+
+
+    $('#schools thead tr:eq(1) th:eq(1)')
+        .each(function () {
+            $(this).html( '<input type="text" placeholder="Пошук" />' );
+            $( 'input', this ).on( 'keyup change', function () {
+                if (datatable.column(1).search() !== this.value ) {
+                    datatable
+                        .column(1)
+                        .search( this.value )
+                        .draw();
+                }
+            });
+        });
+
+    $('#schools thead tr:eq(1) th:eq(2)')
+        .each(function () {
+            $(this).html( '<input type="text" placeholder="Пошук" />' );
+            $( 'input', this ).on( 'keyup change', function () {
+                if (datatable.column(2).search() !== this.value ) {
+                    datatable
+                        .column(2)
+                        .search( this.value )
+                        .draw();
+                }
+            });
+    });
 
 
 
@@ -220,6 +272,8 @@ d3.csv("data/TABLE.csv").then(function(data) {
        datatable.clear();
        datatable.rows.add(filtered).draw();
    });
-    
+
+
+
     
 });
