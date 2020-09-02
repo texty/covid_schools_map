@@ -42,6 +42,7 @@
     <link rel='stylesheet' href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" />
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.css'  type='text/css'/>
     <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css"/>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -55,13 +56,31 @@
 
 </style>
 <body>
-<header>
-    <h1>В яких районах і школах найбільший ризик підхопити Covid-19. Карта</h1>
-</header>
 
+<header>
+    <a class="texty-logo" href="https://texty.org.ua/">
+        <img class="desktop-only" src="img/textylogo.svg" alt="Тексти.org.ua"/>
+    </a>
+
+    <nav class="rubrics-container">
+        <div class="rubric r1"><a href="https://texty.org.ua/theme/koronavirus-najvazhlyvishe/"><span>КОРОНАВІРУС</span></a></div>
+        <div class="rubric r2"><a href="https://texty.org.ua/tag/dezinformatsija/"><span>#Інфовійна</span></a></div>
+        <div class="rubric r3"></div>
+    </nav>
+    <div class="soc">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://texty.org.ua/d/2020/covid-19/" target="_blank" class="share-btn">
+            <i class="fab fa-facebook-square"></i></a>
+        <a href="https://twitter.com/intent/tweet?text=https://texty.org.ua/d/2020/covid-19/" target="_blank" class="share-btn">
+            <i class="fab fa-twitter-square"></i></a>
+    </div>
+</header>
 <main>
-    <p>Як і обіцяв прем’єр-міністр Денис Шмигаль, першовересневі дзвоники пролунали по більшості шкіл України (окрім «червоної» зони, де діти вчитимуться дистанційно ще два тижні). Проте хаотичні дії влади, та її часткове самоусунення від організації шкільного навчання, не додали спокою батькам і вчителям. Вони хвилюються: “Чи безпечно відправляти дитину в школу, адже кількість захворювань росте щодня?”
-    </p>
+    <div id="title">
+        <h1>В яких районах і школах найбільший ризик підхопити Ковід</h1>
+        <h3>Ми зробили розрахували, як і де збільшиться кількість хворих на ковід  після тиждня роботи шкіл.</h3>
+    </div>
+
+    <p>Як і обіцяв прем’єр-міністр Денис Шмигаль, першовересневі дзвоники пролунали у більшості шкіл України (окрім «червоної» зони, де діти вчитимуться дистанційно ще два тижні). Проте хаотичні дії влади, та її <a href="https://texty.org.ua/fragments/101624/covid-19-i-shkola-vlada-umyla-ruky-dyrektory-shkil-samostijno-hotuyutsya-do-vidnovlennya-navchannya/" target="_blank">часткове самоусунення</a> від організації шкільного навчання, не додали спокою батькам і вчителям. Вони хвилюються: “Чи безпечно відправляти дитину в школу, адже кількість захворювань росте щодня?”</p>
 
     <p>На карті нижче дивіться гіпотетичну кількість інфікованих осіб, котрі можуть з’явитися в школі під час першого навчального тижня. Ризик помітно зростає із збільшенням розміру навчального закладу. Так, навіть в досить уражених хворобою регіонах, коронавірус легше підхопити у великій школі на 1000 осіб, ніж в дитсадку, де одночасно перебуває лише 100 вихованців та працівників.
     </p>
@@ -209,11 +228,63 @@
     <p><a href="https://github.com/texty/covid_schools_map/tree/master/download" target="_blank">[ Ось тут ]</a> ви можете перевірити наші розрахунки і закачати дані.  </p>
 </main>
 
+<footer>
+    <div id="logo-copyright">
+        <a class="texty-logo" href="/">
+            <img class="desktop-only" src="img/white_logo.svg" alt="Тексти.org.ua"/>
+
+        </a>
+        <div class="copyright">
+            <p>&copy; 2010—2020 Texty.org.ua</p>
+        </div>
+
+        <p id="license">Матеріали ТЕКСТИ.org.ua можна використовувати згідно ліцензії <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons із зазначенням авторства, CC BY</a> (переклад ліцензії <a href="https://creativecommons.org/licenses/by/4.0/legalcode.uk" target="_blank">українською</a>). Велике прохання ставити гіперпосилання в першому чи другому абзаці вашого матеріалу.</p>
+    </div>
+
+    <div id="guide-block">
+        <ul class="links1">
+            <li><a href="https://texty.org.ua/articles/">Статті</a>
+                <a href="https://texty.org.ua/articles/feed.xml">(RSS)</a>
+            </li>
+            <li><a href="https://texty.org.ua/fragments/">Фрагменти</a>
+                <a href="https://texty.org.ua/fragments/feed.xml">(RSS)</a>
+            </li>
+            <li><a href="https://texty.org.ua/projects">Журналістика даних</a></li>
+            <li><a href="https://texty.org.ua/d/socio">Фальшиві соціологи</a></li>
+        </ul>
+
+        <ul class="links2">
+            <li><a href="https://fgz.texty.org/">Фейкогриз</a></li>
+            <li><a href="https://texty.org.ua/tag/dezinformatsija/">Дезінформація</a></li>
+            <li><a href="https://texty.org.ua/tag/eng/">#English</a></li>
+            <li><a href="https://texty.org.ua/archive-books/">Архів книг</a></li>
+        </ul>
+
+        <ul class="links3">
+            <li><a href="https://texty.org.ua/support" target="_blank">Підтримай нас!</a></li>
+            <li><a href="http://texty.org.ua/donate/#/" target="_blank" >Наш дата-арт</a></li>
+            <li><a href="https://texty.org.ua/tag/hrafik-dnja/">Графік Дня</a></li>
+            <li><a href="https://texty.org.ua/archive-blogs/">Архів блогів</a></li>
+        </ul>
+    </div>
 
 
-
-
-
+    <div id="social_buttons">
+        <p class="piece-title">Стежити:</p>
+        <a href="https://www.facebook.com/TEXTY.org.ua/" target="_blank">
+            <img src="img/facebook.png" alt="Тексти.org.ua - Facebook">
+        </a>
+        <a href="https://www.instagram.com/texty.org.ua/" target="_blank">
+            <img src="img/instagram.png" alt="Тексти.org.ua - Instagram">
+        </a>
+        <a href="https://telegram.me/textyorgua" target="_blank">
+            <img src="img/telegram.png" alt="Тексти.org.ua - Telegram">
+        </a>
+        <a href="https://twitter.com/textyorgua" target="_blank">
+            <img src="img/twitter.png" alt="Тексти.org.ua - Twitter">
+        </a>
+    </div>
+</footer>
 
 <script src="js/map.js"></script>
 
