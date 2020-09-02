@@ -1,7 +1,8 @@
 /**
  * Created by yevheniia on 09.06.20.
  */
-var default_zoom = window.innerWidth > 800 ? 5 : 5;
+var default_zoom_u = window.innerWidth > 800 ? 5 : 4;
+var default_zoom_k = window.innerWidth > 800 ? 9 : 8;
 
 var stops_values = [
     [-3, 'white'],
@@ -21,27 +22,27 @@ var stops_values = [
 mapboxgl.accessToken = 'pk.eyJ1IjoiZHJpbWFjdXMxODIiLCJhIjoiWGQ5TFJuayJ9.6sQHpjf_UDLXtEsz8MnjXw';
 var map = new mapboxgl.Map({
     container: 'map',
-    minZoom: default_zoom,
-    maxZoom: default_zoom + 2,
+    minZoom: default_zoom_u,
+    maxZoom: default_zoom_u + 2,
     hash: false,
     tap: false,
     attributionControl: false,
     style: 'dark_matter.json',
     center: [31.5, 48.5],
-    zoom: default_zoom // starting zoom
+    zoom: default_zoom_u // starting zoom
 });
 
 
 var map2 = new mapboxgl.Map({
     container: 'map2',
-    minZoom: 8,
-    maxZoom: 9,
+    minZoom: default_zoom_k,
+    maxZoom: default_zoom_k,
     hash: false,
     tap: false,
     attributionControl: false,
     style: 'dark_matter.json',
     center: [30.5, 50.4],
-    zoom: 9 // starting zoom
+    zoom: default_zoom_k // starting zoom
 });
 
 map.scrollZoom.disable();
@@ -156,7 +157,7 @@ d3.csv("data/TABLE.csv").then(function(data) {
     var tableData = data.filter(function(d) { return d.region === "м. Київ"});
 
     let initData = tableData.map(function(d){
-        return { "district": d.district_name,  "name": d.school_name, "id": d.edrpo,  "infected": d.pot_infections };
+        return { "Район": d.district_name,  "Школа": d.school_name, "ЄДРПОУ": d.edrpo,  "Потенційна к-ть": d.pot_infections };
     });
 
 
@@ -170,10 +171,10 @@ d3.csv("data/TABLE.csv").then(function(data) {
         },
         data: data.aaData,
         columns: [
-            { data : "district"},
-            { data: "name" },
-            { data: "id" },
-            { data: "infected" }
+            { data : "Район"},
+            { data: "Школа" },
+            { data: "ЄДРПОУ" },
+            { data: "Потенційна к-ть" }
 
         ]
     });
@@ -263,10 +264,10 @@ d3.csv("data/TABLE.csv").then(function(data) {
            .filter(function(d) { return d.region === seletedArea  })
            .map(function(d){
                return {
-                   "district": d.district_name,
-                   "name": d.school_name,
-                   "id": d.edrpo,
-                   "infected": d.pot_infections
+                   "Район": d.district_name,
+                   "Школа": d.school_name,
+                   "ЄДРПОУ": d.edrpo,
+                   "Потенційна к-ть": d.pot_infections
                };
            });
        datatable.clear();
