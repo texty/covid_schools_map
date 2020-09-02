@@ -15,7 +15,7 @@ var map = new mapboxgl.Map({
     tap: false,
     attributionControl: false,
     style: 'dark_matter.json',
-    center: [31.5, 47.0],
+    center: [31.5, 49.5],
     zoom: default_zoom // starting zoom
 });
 
@@ -28,23 +28,21 @@ var map2 = new mapboxgl.Map({
     tap: false,
     attributionControl: false,
     style: 'dark_matter.json',
-    center: [30.5, 50.3],
+    center: [30.5, 50.5],
     zoom: 9 // starting zoom
 });
 
-
-
-
 map.scrollZoom.disable();
 map2.scrollZoom.disable();
-
-
 
 d3.csv("data/TABLE.csv").then(function(data) {
 
     data.forEach(function(d){
         d.pot_infections = +d.pot_infections;
     });
+
+
+    /* ------- карта України ------- */
 
     map.on('load', function () {
         var layers = map.getStyle().layers;
@@ -64,44 +62,71 @@ d3.csv("data/TABLE.csv").then(function(data) {
         });
 
 
+        function redrawUkraineMap(choropleth_column) {
+            map.addLayer({
+                "id": "schools_data",
+                'type': 'fill',
+                'minzoom': 4,
+                'maxzoom': 10,
+                'source': "schools",
+                "source-layer": "schools_covid_4326",
+                "paint": {
+                    'fill-color': {
+                        property: choropleth_column,
+                        stops: [
+                            [-1, 'grey'],
+                            [0, '#ffffcc'],
+                            [1, '#ffeda0'],
+                            [2, "#fed976"],
+                            [3, "#feb24c"],
+                            [5, "#fd8d3c"],
+                            [8, "#fc4e2a"],
+                            [12, "#e31a1c"],
+                            [16, "#e31a1c"],
+                            [20, "#bd0026"],
+                            [23, "#800026"]
+                        ]
+                    },
+                    'fill-outline-color': 'grey'
+                }
+            }, firstSymbolId);
 
-        map.addLayer({
-            "id": "schools_data",
-            'type': 'fill',
-            'minzoom': 4,
-            'maxzoom': 10,
-            'source': "schools",
-            "source-layer": "schools_covid_4326",
-            "paint": {
-                'fill-color': {
-                    property: 'MAP_cleaned_infections1000',
-                    stops: [
-                        [-1, '#f0f0f0'],
-                        [0, '#ffffcc'],
-                        [1, '#ffeda0'],
-                        [2, "#fed976"],
-                        [3, "#feb24c"],
-                        [5, "#fd8d3c"],
-                        [8, "#fc4e2a"],
-                        [12, "#e31a1c"],
-                        [16, "#e31a1c"],
-                        [20, "#bd0026"],
-                        [23, "#800026"]
-                    ]
-                },
-                'fill-outline-color': '#f0f0f0'
-            }
-        }, firstSymbolId);
+        }
+
+        redrawUkraineMap('MAP_cleaned_infections1000');
+
+        d3.select("#ukraine-switch-buttons").selectAll(".map_button").on("click", function() {
+            let selected_layer = d3.select(this).attr("value");
+            d3.select(this.parentNode).selectAll(".map_button").classed("active", false);
+            d3.select(this).classed("active", true);
+            map.removeLayer('schools_data');
+            redrawUkraineMap(selected_layer);
+        });
 
 
+        map.on('click', 'schools_data', function (e) {
+            console.log(e.features[0].properties);
+            let clicked = e.features[0].properties.MAP_cleaned_registration_region;
+            let region = e.features[0].properties.MAP_cleaned_registration_area;
+            let filtered = data.filter(function(d) { return d.region === region && d.district_name === clicked });
+            d3.select("#clicked_region").html(region + ", " + clicked);
 
 
-        map.on('click', 'schools_data', function(e) {
-            console.log(e.features[0].properties.ADM2_UA);
+            theTable.destroy();
+            d3.select("#schools").selectAll("thead").remove();
+            d3.select("#schools").selectAll("tbody").remove();
+            drawTable(filtered);
         });
 
 
 
+    });
+
+
+
+
+    /* карта києва */
+    map2.on('load', function () {
 
         var layers2 = map2.getStyle().layers;
         var firstSymbolId2;
@@ -113,45 +138,55 @@ d3.csv("data/TABLE.csv").then(function(data) {
             }
         }
 
-
         //векторні тайли
         map2.addSource('kyiv', {
             type: 'vector',
             tiles: ["https://texty.github.io/covid_schools_map/tiles/schools_kyiv/{z}/{x}/{y}.pbf"]
         });
 
-        map2.addLayer({
-            "id": "schools_kyiv",
-            'type': 'fill',
-            'minzoom': 4,
-            'maxzoom': 10,
-            'source': "kyiv",
-            "source-layer": "schools_kyiv_4326",
-            "paint": {
-                'fill-color': {
-                    property: 'KYIV_infections1000',
-                    stops: [
-                        [-1, '#f0f0f0'],
-                        [0, '#ffffcc'],
-                        [1, '#ffeda0'],
-                        [2, "#fed976"],
-                        [3, "#feb24c"],
-                        [5, "#fd8d3c"],
-                        [8, "#fc4e2a"],
-                        [12, "#e31a1c"],
-                        [16, "#e31a1c"],
-                        [20, "#bd0026"],
-                        [23, "#800026"]
-                    ]
-                },
-                'fill-outline-color': 'grey'
-            }
-        }, firstSymbolId2);
+
+        function redrawKyivMap(choropleth_column) {
+            map2.addLayer({
+                "id": "schools_kyiv",
+                'type': 'fill',
+                'minzoom': 4,
+                'maxzoom': 10,
+                'source': "kyiv",
+                "source-layer": "schools_kyiv_4326",
+                "paint": {
+                    'fill-color': {
+                        property: choropleth_column,
+                        stops: [
+                            [-1, '#f0f0f0'],
+                            [0, '#ffffff'],
+                            [1, '#ffeda0'],
+                            [2, "#fed976"],
+                            [3, "#feb24c"],
+                            [5, "#fd8d3c"],
+                            [8, "#fc4e2a"],
+                            [12, "#e31a1c"],
+                            [16, "#e31a1c"],
+                            [20, "#bd0026"],
+                            [23, "#800026"]
+                        ]
+                    },
+                    'fill-outline-color': 'grey'
+                }
+            });
+        }
 
 
+        redrawKyivMap('KYIV_infections1000');
+
+        d3.select("#kyiv-switch-buttons").selectAll(".map_button").on("click", function() {
+            let selected_layer = d3.select(this).attr("value");
+            d3.select(this.parentNode).selectAll(".map_button").classed("active", false);
+            d3.select(this).classed("active", true);
+            map2.removeLayer('schools_kyiv');
+            redrawKyivMap(selected_layer);
+        });
 
         map2.on('click', 'schools_kyiv', function(e) {
-            console.log(e.features[0].properties);
             let clicked = e.features[0].properties.NAME_2;
             let region = e.features[0].properties.KYIV_registration_area;
             let filtered = data.filter(function(d) { return d.region === "м. Київ" && d.district_name === clicked + " район" });
@@ -163,6 +198,9 @@ d3.csv("data/TABLE.csv").then(function(data) {
             d3.select("#schools").selectAll("tbody").remove();
             drawTable(filtered);
         });
+
+
+
 
 
 
@@ -182,8 +220,8 @@ d3.csv("data/TABLE.csv").then(function(data) {
     map.addControl(nav, 'top-left');
     // map2.addControl(nav2, 'top-left');
 
-
 });
+
 
 
 
@@ -192,18 +230,11 @@ d3.csv("data/TABLE.csv").then(function(data) {
 
     d3.select("#clicked_region").html("м. Київ, Оболонський район");
 
-    // var table;
-
     drawTable(tableData);
-    //
-    //
-    //
-    //
-    //
+
     function drawTable(df){
 
         df.sort(function(a,b) {return b.pot_infections - a.pot_infections});
-        console.log(df);
 
         var table = d3.select('#schools');
 
@@ -282,9 +313,9 @@ d3.csv("data/TABLE.csv").then(function(data) {
             ]
         });
 
-        new $.fn.dataTable.Responsive(theTable, {
-            details: true
-        } );
+        // new $.fn.dataTable.Responsive(theTable, {
+        //     details: true
+        // } );
 
         // //додаємо пошук по кожній колонці (з data-table official)
         // $('#schools thead tr').clone(true).appendTo( '#schools thead' );
