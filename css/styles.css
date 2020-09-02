@@ -17,25 +17,33 @@ body {
   top: 40%;
   left: 50%; }
 
-#schools {
+#schools, #example {
   width: 100% !important;
   margin: auto; }
   @media (max-width: 812px) {
-    #schools {
+    #schools, #example {
       display: block; } }
 
-#schools_wrapper {
+#schools_wrapper, #example_wrapper {
   width: 60%;
   margin: auto; }
   @media (max-width: 812px) {
-    #schools_wrapper {
+    #schools_wrapper, #example_wrapper {
       width: 90%;
       margin: auto; } }
 
 #table_length {
   display: none; }
 
-h1, h2, p {
+h1, h2, h3, h4, h5, p {
+  line-height: 1.6;
+  width: 60%;
+  margin: 20px auto; }
+  @media (max-width: 812px) {
+    h1, h2, h3, h4, h5, p {
+      width: 90%; } }
+
+h1, h2 {
   text-align: center;
   width: 80%;
   margin: auto;
@@ -106,8 +114,8 @@ option {
   display: none; }
 
 .legend-wrapper {
-  width: 80%;
-  margin-bottom: 50px; }
+  width: 70%;
+  margin: 50px auto auto auto; }
 
 .legend {
   width: 350px;

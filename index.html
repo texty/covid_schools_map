@@ -3,23 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Title</title>
+    <title>В яких районах і школах найбільший ризик підхопити Covid-19</title>
+
+   <!-- OpenGraph Meta Tags -->
+    <meta property="fb:app_id" content="329250623807149"/>
+    <meta property="og:site_name" content="ТЕКСТИ.ORG.UA"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title"
+          content="В яких районах і школах найбільший ризик підхопити Covid-19"/>
+    <meta property="og:image" content="https://texty.org.ua/d/2020/covid_schools/img/cover.png"/>
+    <meta property="og:description"
+          content=""/>
+    <meta property="og:url" content="https://texty.org.ua/d/2020/covid_schools/"/>
+
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:site" content="@textyorgua"/>
+    <meta property="twitter:account_id" content="49572937"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:url" content="https://texty.org.ua/d/2020/covid_schools/">
+    <meta name="twitter:title"
+          content="В яких районах і школах найбільший ризик підхопити Covid-19"/>
+    <meta name="twitter:description"
+          content=""/>
+    <meta name="twitter:image:src" content="https://texty.org.ua/d/2020/covid_schools/img/cover.png"/>
+    <meta name="twitter:image:width" content="1200"/>
+    <meta name="twitter:image:height" content="630"/>
+
+
+    <!-- Other Meta Tags -->
+    <meta name="title" content="В яких районах і школах найбільший ризик підхопити Covid-19">
+    <meta name="description" content="">
+
+
+
 
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
     <link rel='stylesheet' href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" />
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.css'  type='text/css'/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-          crossorigin=""/>
     <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="css/styles.css"/>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-
-
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
     <script type="text/javascript" src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.min.js"></script>
+    <script src="lib/d3v5.min.js"></script>
 </head>
 <style>
 
@@ -29,92 +58,155 @@
 
 <main>
 
+    <h1>В яких районах і школах найбільший ризик підхопити Covid-19. <br>
+        Інтерактивна карта</h1>
 
+    <p>Як і обіцяв прем’єр-міністр Денис Шмигаль, першовересневі дзвоники пролунали по більшості шкіл України (окрім «червоної» зони, де діти вчитимуться дистанційно ще два тижні). Проте хаотичні дії влади, та її часткове самоусунення від організації шкільного навчання, не додали спокою батькам і вчителям. Вони хвилюються: “Чи безпечно відправляти дитину в школу, адже кількість захворювань росте щодня?”
+    </p>
 
-    <h1>Кількість потенційно інфікованих по районах і школах</h1>
-    <p>As schools grapple with how to reopen, new estimates show that large parts of the country would likely see infected students if classrooms opened now.</p>
-
-
+    <p>На карті нижче дивіться гіпотетичну кількість інфікованих осіб, котрі можуть з’явитися в школі під час першого навчального тижня. Ризик помітно зростає із збільшенням розміру навчального закладу. Так, навіть в досить уражених хворобою регіонах, коронавірус легше підхопити у великій школі на 1000 осіб, ніж в дитсадку, де одночасно перебуває лише 100 вихованців та працівників.
+    </p>
 
     <div id="maps">
+        <h3>Кількість потенційно інфікованих по районах (Україна)</h3>
 
+        <!-- карта -->
+        <div id="map" class="container"></div>
 
-
-        <div class="col-1-2">
-            <h3>Україна</h3>
-
-
-            <div id="map" class="container"></div>
-            <div id="loading-background" class=''>
-                <img id="spinner" src="img/wait.gif" alt="Be patient..."/>
-            </div>
-            <div class="legend-wrapper">
-                <p><span>0</span>
-                    <span id="legend1"></span>
-                    <span>27</span>
-                </p>
-
-            </div>
-            <div class="buttons" id="ukraine-switch-buttons">
-                <div class="map_button" value="MAP_cleaned_infections100">школи на 100 учнів</div>
-                <div class="map_button" value="MAP_cleaned_infections200">школи на 200 учнів</div>
-                <div class="map_button" value="MAP_cleaned_infections500">школи на 500 учнів</div>
-                <div class="map_button active" value="MAP_cleaned_infections1000">школи на 1000 учнів</div>
-            </div>
+        <!-- спінер -->
+        <div id="loading-background" class=''>
+            <img id="spinner" src="img/wait.gif" alt="Be patient..."/>
         </div>
 
-        <div class="col-1-2">
-            <h3>Київ</h3>
-            <div id="map2" class="container"></div>
-            <div class="legend-wrapper">
-                <p><span>0</span>
-                    <span id="legend2"></span>
-                    <span>27</span>
-                </p>
-            </div>
-            <div class="buttons" id="kyiv-switch-buttons">
-                <div class="map_button" value="KYIV_infections100">школи на 100 учнів</div>
-                <div class="map_button" value="KYIV_infections200">школи на 200 учнів</div>
-                <div class="map_button" value="KYIV_infections500">школи на 500 учнів</div>
-                <div class="map_button active" value="KYIV_infections1000">школи на 1000 учнів</div>
-            </div>
+        <!-- легенда -->
+        <div class="legend-wrapper">
+            <p><span>0</span>
+                <span id="legend1"></span>
+                <span>27</span>
+            </p>
         </div>
-    </div>
+
+        <!-- перемикачі -->
+        <div class="buttons" id="ukraine-switch-buttons">
+            <div class="map_button" value="MAP_cleaned_infections100">школи на 100 учнів</div>
+            <div class="map_button" value="MAP_cleaned_infections200">школи на 200 учнів</div>
+            <div class="map_button" value="MAP_cleaned_infections500">школи на 500 учнів</div>
+            <div class="map_button active" value="MAP_cleaned_infections1000">школи на 1000 учнів</div>
+        </div>
 
 
 
-    <div class="col-2-3">
-        <h2>Оберіть свою область:
 
 
-        <select id="region-to-show">
-            <option value="м. Київ">м. Київ</option>
-            <option value="Київська">Київська</option>
-            <option value="Одеська">Одеська</option>
-            <option value="Тернопільська">Тернопільська</option>
-        </select>
-        </h2>
+        <h3>Кількість потенційно інфікованих по районах (Київ)</h3>
 
+        <!-- карта -->
+        <div id="map2" class="container"></div>
 
+        <!-- легенда-->
+        <div class="legend-wrapper">
+            <p><span>0</span>
+                <span id="legend2"></span>
+                <span>27</span>
+            </p>
+        </div>
 
-        <table id="schools" class="responsive">
-            <thead>
+        <!-- перемикачі -->
+        <div class="buttons" id="kyiv-switch-buttons">
+            <div class="map_button" value="KYIV_infections100">школи на 100 учнів</div>
+            <div class="map_button" value="KYIV_infections200">школи на 200 учнів</div>
+            <div class="map_button" value="KYIV_infections500">школи на 500 учнів</div>
+            <div class="map_button active" value="KYIV_infections1000">школи на 1000 учнів</div>
+        </div>
+</div>
+
+    <p>Ми також розрахували ймовірну кількість інфікованих осіб для понад 14 тисяч міських та сільських шкіл України. Нижче наводимо перелік потенційно найбільш уражених шкіл, котрі відкрилися цього тижня (тобто не знаходяться в “червоній зоні”):
+    </p>
+
+    <!-- маленька таблиця -->
+    <table id="example" class="responsive">
+        <thead>
             <tr>
-                <th>Район</th>
-                <th>Школа</th>
-                <th>ЄДРПОУ</th>
-                <th>Потенційна к-ть</th>
+                <th>Населений пункт</th>
+                <th>Назва школи</th>
+                <th>Потенційна кількість інфікованих</th>
+                <th>Розмір школи</th>
             </tr>
-            </thead>
-        </table>
-
-    </div>
+        </thead>
+    </table>
 
 
-
+    <p>Скористайтесь табличкою пошуку нижче, щоб перевірити школу у вашому місті, районі чи селі.</p>
 
 
 
+    <!-- велика таблиця -->
+    <h2>Оберіть свою область:
+    <select id="region-to-show">
+        <option value="м. Київ">м. Київ</option>
+        <option value="Вінницька">Вінницька</option>
+        <option value="Волинська">Волинська</option>
+        <option value="Дніпропетровська">Дніпропетровська</option>
+        <option value="Донецька">Донецька</option>
+        <option value="Житомирська">Житомирська</option>
+        <option value="Закарпатська">Закарпатська</option>
+        <option value="Запорізька">Запорізька</option>
+        <option value="Івано-Франківська">Івано-Франківська</option>
+        <option value="Київська">Київська</option>
+        <option value="Кіровоградська">Кіровоградська</option>
+        <option value="Луганська">Луганська</option>
+        <option value="Львівська">Львівська</option>
+        <option value="Миколаївська">Миколаївська</option>
+        <option value="Одеська">Одеська</option>
+        <option value="Полтавська">Полтавська</option>
+        <option value="Рівненська">Рівненська</option>
+        <option value="Сумська">Сумська</option>
+        <option value="Тернопільська">Тернопільська</option>
+        <option value="Харківська">Харківська</option>
+        <option value="Херсонська">Херсонська</option>
+        <option value="Хмельницька">Хмельницька</option>
+        <option value="Черкаська">Черкаська</option>
+        <option value="Чернігівська">Чернігівська</option>
+        <option value="Черновецька">Черновецька</option>
+    </select>
+    </h2>
+
+    <table id="schools" class="responsive">
+        <thead>
+        <tr>
+            <th>Район</th>
+            <th>Назва школи</th>
+            <th>Потенційна кількість інфікованих</th>
+            <th>Розмір школи</th>
+
+        </tr>
+        </thead>
+    </table>
+
+    <h2>Як ми це порахували?</h2>
+
+    <p>Ми надихнулися публікацією в  The New York Times та використали алгоритм оцінки ризику інфікування COVID-19, котрий розробила команда дослідників з Техаського університету в Остіні, США.
+    </p>
+
+    <p>Для того, щоб розрахувати ймовірне число інфікованих людей, котрі з’являться у школі впродовж тижня, необхідно знати два параметри: 1. сумарну кількість учнів, вчителів та технічного персоналу, які там перебувають; 2.  ймовірність нещодавнього зараження поза межами школи.
+    </p>
+
+    <p>Далі множимо кількість людей в школі на ймовірність нещодавнього зараження. Краще використовувати локальну поширеність хвороби. Наприклад, якщо 3% людей інфіковано COVID-19 у місті Х, то відповідно 3 із 100 учнів та вчителів певної школи цього міста теж будуть носіями хвороби.
+    </p>
+
+    <p>Для того, щоб оцінити локальну поширеність хвороби (в межах району наприклад), необхідно:
+    </p>
+
+    <p>1) Взяти число нових випадків інфекції за останні 14 днів. Ці дані знаходяться у відкритому доступі завдяки ЦГЗ та НСЗУ. Оскільки наша модель передбачає період з 31 серпня по 6 вересня, ми взяли статистику інфікування за період з 16 по 30 серпня.
+    </p>
+
+    <p>2) Помножити його на певний коефіцієнт «невиявлення» хвороби. Це робиться для того, щоб встановити більш-менш реальну кількість інфікованих в районі. Ми множили на 3, спираючись на результати епідеміологічного моделювання від Київської школи економіки. Їхня оцінка свідчить, що Україна в цілому виявляє 30% нових випадків. Ця цифра співставна як із середніми значеннями по світу, так і з коефіцієнтами, що використали американські моделювальники. Проте, варто зазначити, що це значення є усередненням по всій країні, і на рівні окремих районів ситуація з виявленням нових випадків COVID-19 може бути іншою.
+    </p>
+
+    <p>3) Розділити на кількість людей, котрі мешкають в цьому районі. Для цього показника ми взяли цифри, котрі регулярно наводить Держстат. На превеликий жаль, в Україні вже майже 20 років не проводили регулярного перепису населення, тому не можливо встановити наскільки достовірними є ці дані.
+    </p>
+
+    <p>Тут ви можете перевірити наші розрахунки і закачати дані. [Лінк на наш гітхаб] </p>
 </main>
 
 
@@ -122,7 +214,7 @@
 
 
 
-<script src="lib/d3v5.min.js"></script>
+
 <script src="js/map.js"></script>
 
 

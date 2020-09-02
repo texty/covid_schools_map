@@ -48,9 +48,13 @@ var map2 = new mapboxgl.Map({
 map.scrollZoom.disable();
 map2.scrollZoom.disable();
 
-d3.csv("data/TABLE.csv").then(function(data) {
 
-    data.forEach(function(d){
+Promise.all([
+    d3.csv("data/TABLE.csv"),
+    d3.csv("data/smallTable.csv")
+]).then(function(data) {
+
+    data[0].forEach(function(d){
         d.pot_infections = +d.pot_infections;
     });
 
@@ -154,14 +158,37 @@ d3.csv("data/TABLE.csv").then(function(data) {
     });
 
 
-    var initData = data
+
+    var smalltable = $('#example').DataTable({
+        paging: false,
+        searching: false,
+        order: [[2, "desc"]],
+        responsive: true,
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Ukrainian.json"
+        },
+        data: data.aaData,
+        columns: [
+            { data: "Населений пункт"},
+            { data: "Назва школи" },
+            { data: "Потенційна кількість інфікованих" },
+            { data: "Розмір школи" }
+
+        ]
+    });
+
+    smalltable.rows.add(data[1]).draw();
+
+
+    var initData = data[0]
         .filter(function(d) { return d.region === "м. Київ"})
         .map(function(d){
             return {
                 "Район": d.district_name,
-                "Школа": d.school_name,
-                "ЄДРПОУ": d.edrpo,
-                "Потенційна к-ть": d.pot_infections
+                "Назва школи": d.school_name,
+                "Потенційна кількість інфікованих": d.pot_infections + " oc.",
+                "Розмір школи": d.tot_people + " oc."
+                
             };
         });
 
@@ -175,10 +202,11 @@ d3.csv("data/TABLE.csv").then(function(data) {
         },
         data: data.aaData,
         columns: [
-            { data : "Район"},
-            { data: "Школа" },
-            { data: "ЄДРПОУ" },
-            { data: "Потенційна к-ть" }
+            { data: "Район"},
+            { data: "Назва школи" },
+            { data: "Потенційна кількість інфікованих" },
+            { data: "Розмір школи" }
+           
 
         ]
     });
@@ -251,20 +279,17 @@ d3.csv("data/TABLE.csv").then(function(data) {
             });
     });
 
-
-
-
    /*---  змінюємо таблицю по селекту ---*/
    d3.select("#region-to-show").on("change", function(){
        let seletedArea = d3.select(this).node().value;
-       var filtered = data
+       var filtered = data[0]
            .filter(function(d) { return d.region === seletedArea  })
            .map(function(d){
                return {
                    "Район": d.district_name,
-                   "Школа": d.school_name,
-                   "ЄДРПОУ": d.edrpo,
-                   "Потенційна к-ть": d.pot_infections
+                   "Назва школи": d.school_name,
+                   "Потенційна кількість інфікованих": d.pot_infections + " oc.",
+                   "Розмір школи": d.tot_people + " oc."
                };
            });
        datatable.clear();

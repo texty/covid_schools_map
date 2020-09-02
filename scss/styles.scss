@@ -15,7 +15,6 @@ body {
 
 
 #spinner {
-  //background-image: url("../img/loading.gif");
   width: 100px;
   position: absolute;
   top: 40%;
@@ -23,7 +22,7 @@ body {
 }
 
 
-#schools {
+#schools, #example {
   width: 100% !important;
   margin: auto;
   @media(max-width: 812px){
@@ -31,7 +30,7 @@ body {
   }
 }
 
-#schools_wrapper {
+#schools_wrapper, #example_wrapper {
   width: 60%;
   margin: auto;
   @media(max-width: 812px){
@@ -44,7 +43,19 @@ body {
   display: none;
 }
 
-h1, h2, p {
+
+h1, h2, h3, h4, h5, p {
+  line-height: 1.6;
+  width: 60%;
+  margin: 20px auto;
+  @media(max-width: 812px){
+    width: 90%;
+  }
+}
+
+
+
+h1, h2 {
   text-align: center;
   width: 80%;
   margin: auto;
@@ -54,6 +65,8 @@ h1, h2, p {
 h2 {
   margin: 30px auto;
 }
+
+
 
 h3 {
   text-align: center;
@@ -138,8 +151,8 @@ option {
 }
 
 .legend-wrapper {
-  width: 80%;
-  margin-bottom: 50px;
+  width: 70%;
+  margin: 50px auto auto auto;
 
 }
 
