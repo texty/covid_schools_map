@@ -1,0 +1,37 @@
+@font-face {
+  font-family: 'ProximaNova';
+  src: url("../font/proxima_regular/proxima-nova-regular.eot");
+  src: url("../font/proxima_regular/proxima-nova-regular.eot?#iefix") format("embedded-opentype"), url("../font/proxima_regular/proxima-nova-regular.woff2") format("woff2"), url("../font/proxima_regular/proxima-nova-regular.woff") format("woff"), url("../font/proxima_regular/proxima-nova-regular.ttf") format("truetype"), url("../font/proxima_regular/proxima-nova-regular.svg#youworkforthem") format("svg");
+  font-weight: 400;
+  font-style: normal; }
+@font-face {
+  font-family: 'ProximaNova';
+  src: url("../font/proxima_bold/proxima-nova-bold.eot");
+  src: url("../font/proxima_bold/proxima-nova-bold.eot?#iefix") format("embedded-opentype"), url("../font/proxima_bold/proxima-nova-bold.woff2") format("woff2"), url("../font/proxima_bold/proxima-nova-bold.woff") format("woff"), url("../font/proxima_bold/proxima-nova-bold.ttf") format("truetype"), url("../font/proxima_bold/proxima-nova-bold.svg#youworkforthem") format("svg");
+  font-weight: 600;
+  font-style: normal; }
+.donate-us {
+  margin: 80px auto 30px auto; }
+  .donate-us hr {
+    grid-column: 1/-1;
+    margin: 20px 0; }
+  .donate-us a.donate-button {
+    text-decoration: none;
+    cursor: pointer;
+    width: max-content;
+    margin: auto;
+    min-height: 50px;
+    padding: 10px;
+    color: white;
+    background-color: #ed6746;
+    display: flex; }
+    .donate-us a.donate-button p {
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin: auto !important;
+      font-weight: 600; }
+  .donate-us a {
+    color: #ed6746;
+    border-bottom: 0; }
+
+/*# sourceMappingURL=donate.css.map */

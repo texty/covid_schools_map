@@ -1,0 +1,80 @@
+@charset "UTF-8";
+@font-face {
+  font-family: 'ProximaNova';
+  src: url("../font/proxima_regular/proxima-nova-regular.eot");
+  src: url("../font/proxima_regular/proxima-nova-regular.eot?#iefix") format("embedded-opentype"), url("../font/proxima_regular/proxima-nova-regular.woff2") format("woff2"), url("../font/proxima_regular/proxima-nova-regular.woff") format("woff"), url("../font/proxima_regular/proxima-nova-regular.ttf") format("truetype"), url("../font/proxima_regular/proxima-nova-regular.svg#youworkforthem") format("svg");
+  font-weight: 400;
+  font-style: normal; }
+@font-face {
+  font-family: 'ProximaNova';
+  src: url("../font/proxima_bold/proxima-nova-bold.eot");
+  src: url("../font/proxima_bold/proxima-nova-bold.eot?#iefix") format("embedded-opentype"), url("../font/proxima_bold/proxima-nova-bold.woff2") format("woff2"), url("../font/proxima_bold/proxima-nova-bold.woff") format("woff"), url("../font/proxima_bold/proxima-nova-bold.ttf") format("truetype"), url("../font/proxima_bold/proxima-nova-bold.svg#youworkforthem") format("svg");
+  font-weight: 600;
+  font-style: normal; }
+footer {
+  background-color: #333;
+  color: white;
+  margin-top: 80px;
+  padding: 30px 0;
+  display: grid;
+  grid-template-columns: 2fr 13fr 5fr 35fr 5fr 13fr 1fr; }
+  @media (max-width: 800px) {
+    footer {
+      background-color: black;
+      color: white;
+      padding: 30px 1em;
+      display: block; } }
+  footer a {
+    text-decoration: none;
+    color: white; }
+  footer a:hover {
+    color: #ed6746; }
+  footer li, footer p {
+    font-size: 16px;
+    margin: 5px 0; }
+
+/* копірайт колонка */
+#logo-copyright {
+  grid-column: 2/3; }
+  #logo-copyright .copyright {
+    margin-top: 20px; }
+  #logo-copyright a.texty-logo {
+    width: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    #logo-copyright a.texty-logo img {
+      width: 100%;
+      margin: auto; }
+  #logo-copyright #license {
+    grid-column: 2/-1;
+    margin-top: 50px;
+    font-size: 14px; }
+
+/* лінки */
+#guide-block {
+  grid-column: 4/5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-between; }
+  @media (max-width: 1050px) {
+    #guide-block {
+      grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 800px) {
+    #guide-block {
+      display: none; } }
+  #guide-block ul {
+    list-style-type: none;
+    margin: 0; }
+
+/* соціальні мережі */
+#social_buttons {
+  grid-column: -3/-2; }
+  @media (max-width: 800px) {
+    #social_buttons {
+      margin-top: 50px; } }
+  #social_buttons img {
+    width: 30px;
+    margin-right: 10px; }
+
+/*# sourceMappingURL=footer.css.map */
