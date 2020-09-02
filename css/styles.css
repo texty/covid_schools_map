@@ -3,6 +3,14 @@ body {
   padding: 0;
   font-family: 'Open Sans', sans-serif; }
 
+header {
+  min-height: 30vh;
+  display: flex; }
+  header h1 {
+    max-width: 60%;
+    font-size: 46px;
+    margin: auto; }
+
 .container {
   width: 100%;
   height: 70vh; }
@@ -11,36 +19,21 @@ body {
       width: 100%;
       height: 60vh; } }
 
+.map_wrapper {
+  position: relative; }
+
 #spinner {
   width: 100px;
   position: absolute;
   top: 40%;
   left: 50%; }
 
-#schools, #example {
-  width: 100% !important;
-  margin: auto; }
-  @media (max-width: 812px) {
-    #schools, #example {
-      display: block; } }
-
-#schools_wrapper, #example_wrapper {
-  width: 60%;
-  margin: auto; }
-  @media (max-width: 812px) {
-    #schools_wrapper, #example_wrapper {
-      width: 90%;
-      margin: auto; } }
-
-#table_length {
-  display: none; }
-
-h1, h2, h3, h4, h5, p {
+h2, h3, h4, h5, p {
   line-height: 1.6;
   width: 60%;
   margin: 20px auto; }
   @media (max-width: 812px) {
-    h1, h2, h3, h4, h5, p {
+    h2, h3, h4, h5, p {
       width: 90%; } }
 
 h1, h2 {
@@ -50,30 +43,15 @@ h1, h2 {
   line-height: 1.6; }
 
 h2 {
-  margin: 30px auto; }
+  margin: 100px auto 30px auto; }
+
+p {
+  font-weight: 18px; }
 
 h3 {
   text-align: center;
   font-weight: normal;
   text-transform: uppercase; }
-
-#maps {
-  margin: 50px 0; }
-  @media (max-width: 1200px) {
-    #maps {
-      display: block; } }
-
-@media (max-width: 800px) {
-  thead tr:nth-child(1) {
-    display: none; } }
-
-@media (max-width: 800px) {
-  table tr, th, td {
-    display: block; } }
-
-@media (max-width: 800px) {
-  tbody > tr:nth-child(even) {
-    background-color: wheat !important; } }
 
 .buttons {
   margin: auto auto 100px auto;
@@ -94,6 +72,36 @@ h3 {
 
 .active {
   background: lightgrey; }
+
+#schools, #example {
+  width: 100% !important;
+  margin: auto; }
+  @media (max-width: 812px) {
+    #schools, #example {
+      display: block; } }
+
+#schools_wrapper, #example_wrapper {
+  width: 60%;
+  margin: auto; }
+  @media (max-width: 812px) {
+    #schools_wrapper, #example_wrapper {
+      width: 90%;
+      margin: auto; } }
+
+#table_length {
+  display: none; }
+
+@media (max-width: 800px) {
+  thead tr:nth-child(1) {
+    display: none; } }
+
+@media (max-width: 800px) {
+  table tr, th, td {
+    display: block; } }
+
+@media (max-width: 800px) {
+  tbody > tr:nth-child(even) {
+    background-color: wheat !important; } }
 
 thead > tr > th {
   background-color: white; }
