@@ -275,6 +275,110 @@ d3.csv("data/TABLE.csv").then(function(data) {
    });
 
 
+    [-3, 'white'],
+        [-1, 'grey'],
+        [0, '#ffffcc'],
+        [1, '#ffeda0'],
+        [2, "#fed976"],
+        [3, "#feb24c"],
+        [5, "#fd8d3c"],
+        [8, "#fc4e2a"],
+        [12, "#e31a1c"],
+        [16, "#e31a1c"],
+        [20, "#bd0026"],
+        [23, "#800026"]
+
+    var w = 250, h = 50;
+
+    var key = d3.select("#legend1")
+        .append("svg")
+        .attr("width", w + 100)
+        .attr("height", h);
+
+    var legend = key.append("defs")
+        .append("svg:linearGradient")
+        .attr("id", "gradient")
+        .attr("x1", "0%")
+        .attr("y1", "100%")
+        .attr("x2", "100%")
+        .attr("y2", "100%")
+        .attr("spreadMethod", "pad");
+
+    legend.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "#ffffcc")
+        .attr("stop-opacity", 1);
+
+    legend.append("stop")
+        .attr("offset", "10%")
+        .attr("stop-color", "#ffeda0")
+        .attr("stop-opacity", 1);
+
+    legend.append("stop")
+        .attr("offset", "20%")
+        .attr("stop-color", "#fed976")
+        .attr("stop-opacity", 1);
+
+    legend.append("stop")
+        .attr("offset", "30%")
+        .attr("stop-color", "#feb24c")
+        .attr("stop-opacity", 1);
+
+    legend.append("stop")
+        .attr("offset", "40%")
+        .attr("stop-color", "#fd8d3c")
+        .attr("stop-opacity", 1);
+
+    legend.append("stop")
+        .attr("offset", "50%")
+        .attr("stop-color", "#fc4e2a")
+        .attr("stop-opacity", 1);
+
+
+    legend.append("stop")
+        .attr("offset", "60%")
+        .attr("stop-color", "#e31a1c")
+        .attr("stop-opacity", 1);
+
+    legend.append("stop")
+        .attr("offset", "70%")
+        .attr("stop-color", "#bd0026")
+        .attr("stop-opacity", 1);
+
+    legend.append("stop")
+        .attr("offset", "80%")
+        .attr("stop-color", "#800026")
+        .attr("stop-opacity", 1);
+
+
+
+
+    key.append("rect")
+        .attr("width", w)
+        .attr("height", h - 30)
+        .style("fill", "url(#gradient)")
+        .attr("transform", "translate(10,10)");
+
+    var y = d3.scaleLinear()
+        .range([w, 0])
+        .domain([30, 0]);
+
+    var yAxis = d3.axisBottom()
+        .scale(y)
+        .ticks(5);
+
+    key.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(10,30)")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("axis title");
+
+
 
     
 });
