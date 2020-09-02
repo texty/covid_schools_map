@@ -13,6 +13,16 @@ body {
   }
 }
 
+
+#spinner {
+  //background-image: url("../img/loading.gif");
+  width: 100px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+}
+
+
 #schools {
   width: 100% !important;
   margin: auto;
@@ -136,4 +146,11 @@ option {
 .legend {
   width: 350px;
   margin: auto 0 auto auto;
+}
+
+#legend1, #legend2  {
+  background-image: linear-gradient(to right, #ffffff, #ffffcc, #ffeda0, #fed976,#feb24c,#fd8d3c,#fc4e2a,#e31a1c,#bd0026,#800026, #800026);
+  display: inline-block;
+  width: 150px;
+  height: 1em
 }

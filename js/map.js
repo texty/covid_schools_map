@@ -78,7 +78,7 @@ d3.csv("data/TABLE.csv").then(function(data) {
                         property: choropleth_column,
                         stops: stops_values
                     },
-                    'fill-outline-color': '#d3d3d3'
+                    'fill-outline-color': 'lightgrey'
                 }
             });
         }
@@ -143,23 +143,27 @@ d3.csv("data/TABLE.csv").then(function(data) {
             redrawKyivMap(selected_layer);
         });
 
-        //  function sourceCallback() {
-        //      if (map.getSource('elections_06') && map.isSourceLoaded('elections_06') && map.isStyleLoaded()) {
-        //          d3.select("#spinner").remove();
-        //      }
-        //  }        //
-        //
-        // map.on('sourcedata', sourceCallback);
+         function sourceCallback() {
+             if (map.getSource('schools') && map.isSourceLoaded('schools') && map.isStyleLoaded()) {
+                 d3.select("#spinner").remove();
+             }
+         }        //
+        
+        map.on('sourcedata', sourceCallback);
 
     });
 
 
-    var tableData = data.filter(function(d) { return d.region === "м. Київ"});
-
-    let initData = tableData.map(function(d){
-        return { "Район": d.district_name,  "Школа": d.school_name, "ЄДРПОУ": d.edrpo,  "Потенційна к-ть": d.pot_infections };
-    });
-
+    var initData = data
+        .filter(function(d) { return d.region === "м. Київ"})
+        .map(function(d){
+            return {
+                "Район": d.district_name,
+                "Школа": d.school_name,
+                "ЄДРПОУ": d.edrpo,
+                "Потенційна к-ть": d.pot_infections
+            };
+        });
 
     var datatable = $('#schools').DataTable({
         pageLength: 10,
@@ -179,15 +183,8 @@ d3.csv("data/TABLE.csv").then(function(data) {
         ]
     });
 
-
     //додаємо дані в таблицю
     datatable.rows.add(initData).draw();
-
-    // new $.fn.dataTable.Responsive( datatable, {
-    //     details: true
-    // } );
-
-
 
     $('#schools thead tr').clone(true).appendTo( '#schools thead' );
 
@@ -273,108 +270,5 @@ d3.csv("data/TABLE.csv").then(function(data) {
        datatable.clear();
        datatable.rows.add(filtered).draw();
    });
-
-
-    addLegend("#legend1");
-    addLegend("#legend2");
-
-    /* легенда */
-    function addLegend(container){
-
-        var w = 250, h = 50;
-
-        var key = d3.select(container)
-            .append("svg")
-            .attr("width", w + 100)
-            .attr("height", h);
-
-        var legend = key.append("defs")
-            .append("svg:linearGradient")
-            .attr("id", "gradient")
-            .attr("x1", "0%")
-            .attr("y1", "100%")
-            .attr("x2", "100%")
-            .attr("y2", "100%")
-            .attr("spreadMethod", "pad");
-
-        legend.append("stop")
-            .attr("offset", "0%")
-            .attr("stop-color", "#ffff")
-            .attr("stop-opacity", 1);
-
-        legend.append("stop")
-            .attr("offset", "10%")
-            .attr("stop-color", "#ffeda0")
-            .attr("stop-opacity", 1);
-
-        legend.append("stop")
-            .attr("offset", "20%")
-            .attr("stop-color", "#fed976")
-            .attr("stop-opacity", 1);
-
-        legend.append("stop")
-            .attr("offset", "30%")
-            .attr("stop-color", "#feb24c")
-            .attr("stop-opacity", 1);
-
-        legend.append("stop")
-            .attr("offset", "40%")
-            .attr("stop-color", "#fd8d3c")
-            .attr("stop-opacity", 1);
-
-        legend.append("stop")
-            .attr("offset", "50%")
-            .attr("stop-color", "#fc4e2a")
-            .attr("stop-opacity", 1);
-
-
-        legend.append("stop")
-            .attr("offset", "60%")
-            .attr("stop-color", "#e31a1c")
-            .attr("stop-opacity", 1);
-
-        legend.append("stop")
-            .attr("offset", "70%")
-            .attr("stop-color", "#bd0026")
-            .attr("stop-opacity", 1);
-
-        legend.append("stop")
-            .attr("offset", "80%")
-            .attr("stop-color", "#800026")
-            .attr("stop-opacity", 1);
-
-
-
-
-        key.append("rect")
-            .attr("width", w)
-            .attr("height", h - 30)
-            .style("fill", "url(#gradient)")
-            .attr("transform", "translate(10,10)");
-
-        var y = d3.scaleLinear()
-            .range([w, 0])
-            .domain([30, 0]);
-
-        var yAxis = d3.axisBottom()
-            .scale(y)
-            .ticks(5);
-
-        key.append("g")
-            .attr("class", "y axis")
-            .attr("transform", "translate(10,30)")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 0)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("axis title");
-
-
-    }
-
-
-
     
 });
