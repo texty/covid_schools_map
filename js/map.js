@@ -2,7 +2,6 @@
  * Created by yevheniia on 09.06.20.
  */
 var default_zoom = window.innerWidth > 800 ? 5 : 5;
-var min_zoom =  window.innerWidth > 800 ? 5 : 5;
 
 var stops_values = [
     [-1, 'grey'],
@@ -80,11 +79,11 @@ d3.csv("data/TABLE.csv").then(function(data) {
                     'fill-outline-color': 'grey'
                 }
             });
-
         }
 
         redrawUkraineMap('MAP_cleaned_infections1000');
 
+        /* перемикаємо шари  карти */
         d3.select("#ukraine-switch-buttons").selectAll(".map_button").on("click", function() {
             let selected_layer = d3.select(this).attr("value");
             d3.select(this.parentNode).selectAll(".map_button").classed("active", false);
@@ -92,6 +91,11 @@ d3.csv("data/TABLE.csv").then(function(data) {
             map.removeLayer('schools_data');
             redrawUkraineMap(selected_layer);
         });
+
+
+        var nav = new mapboxgl.NavigationControl();
+        map.addControl(nav, 'top-left');
+
     }); //end of Ukraine map
 
 
@@ -128,6 +132,7 @@ d3.csv("data/TABLE.csv").then(function(data) {
 
         redrawKyivMap('KYIV_infections1000');
 
+
         d3.select("#kyiv-switch-buttons").selectAll(".map_button").on("click", function() {
             let selected_layer = d3.select(this).attr("value");
             d3.select(this.parentNode).selectAll(".map_button").classed("active", false);
@@ -136,43 +141,20 @@ d3.csv("data/TABLE.csv").then(function(data) {
             redrawKyivMap(selected_layer);
         });
 
-        map2.on('click', 'schools_kyiv', function(e) {
-            let clicked = e.features[0].properties.NAME_2;
-            let region = e.features[0].properties.KYIV_registration_area;
-            let filtered = data.filter(function(d) { return d.region === "м. Київ" && d.district_name === clicked + " район" });
-            d3.select("#clicked_region").html(region + ", " + clicked + " район");
-        });
+        //  function sourceCallback() {
+        //      if (map.getSource('elections_06') && map.isSourceLoaded('elections_06') && map.isStyleLoaded()) {
+        //          d3.select("#spinner").remove();
+        //      }
+        //  }        //
+        //
+        // map.on('sourcedata', sourceCallback);
 
-
-
-
-
-
-   //  function sourceCallback() {
-   //      if (map.getSource('elections_06') && map.isSourceLoaded('elections_06') && map.isStyleLoaded()) {
-   //          d3.select("#spinner").remove();
-   //      }
-   //  }
-   //
-   //
-   // map.on('sourcedata', sourceCallback);
-
-
-    var nav = new mapboxgl.NavigationControl();
-    // var nav2 = new mapboxgl.NavigationControl();
-    //
-    map.addControl(nav, 'top-left');
-    // map2.addControl(nav2, 'top-left');
-
-});
+    });
 
 
     var tableData = data.filter(function(d) { return d.region === "м. Київ"});
 
-    d3.select("#clicked_region").html("м. Київ");
-
     let initData = tableData.map(function(d){
-
         return { "district": d.district_name,  "name": d.school_name, "id": d.edrpo,  "infected": d.pot_infections };
     });
 
@@ -194,31 +176,11 @@ d3.csv("data/TABLE.csv").then(function(data) {
         ]
     });
 
-
+    //додаємо дані в таблицю
     datatable.rows.add(initData).draw();
+    
 
     $('#schools thead tr').clone(true).appendTo( '#schools thead' );
-
-    // $('#schools thead tr:eq(0) th:eq(1), ' +
-    //     '#schools thead tr:eq(0) th:eq(2), ' +
-    //     '#schools thead tr:eq(0) th:eq(3)')
-    //     .each(function (i) {
-    //         console.log(i);
-    //         $(this).html( '<input type="text" placeholder="Пошук" />' );
-    //         $( 'input', this ).on( 'keyup change', function () {
-    //             if (datatable.column(i).search() !== this.value ) {
-    //                 datatable
-    //                     .column(i)
-    //                     .search( this.value )
-    //                     .draw();
-    //             }
-    //         });
-    //     });
-
-
-
-
-
 
     // select option  в другу колонку
     $('#schools thead tr:eq(1) th:eq(0)').each(function (i) {
@@ -240,6 +202,9 @@ d3.csv("data/TABLE.csv").then(function(data) {
 
 
 
+
+
+   /*---  змінюємо таблицю по селекту ---*/
    d3.select("#region-to-show").on("change", function(){
        let seletedArea = d3.select(this).node().value;
        var filtered = data
@@ -255,27 +220,6 @@ d3.csv("data/TABLE.csv").then(function(data) {
        datatable.clear();
        datatable.rows.add(filtered).draw();
    });
-
-
-    // map.on('click', 'schools_data', function (e) {
-    //     let clicked = e.features[0].properties.MAP_cleaned_registration_region;
-    //     let region = e.features[0].properties.MAP_cleaned_registration_area;
-    //     let filtered = data.filter(function(d) { return d.region === region && d.district_name === clicked });
-    //     filtered = filtered.map(function(d){
-    //         return {  "district": d.district_name, "name": d.school_name, "id": d.edrpo,  "infected": d.pot_infections };
-    //     });
-    //
-    //     d3.select("#clicked_region").html(region + ", " + clicked);
-    //     datatable.clear();
-    //     datatable.rows.add(filtered).draw();
-    //
-    // });
-
-
-
-
-
-    
     
     
 });
