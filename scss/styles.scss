@@ -6,7 +6,7 @@ body {
 
 .container {
   width: 100%;
-  height: 60vh;
+  height: 70vh;
   @media(max-width: 1200px){
     width: 100%;
     height: 60vh;
@@ -127,7 +127,13 @@ option {
   display: none;
 }
 
+.legend-wrapper {
+  width: 80%;
+  margin-bottom: 50px;
+
+}
+
 .legend {
   width: 350px;
-  margin: auto;
+  margin: auto 0 auto auto;
 }
