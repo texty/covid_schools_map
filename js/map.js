@@ -73,7 +73,7 @@ Promise.all([
         //векторні тайли
         map.addSource('schools', {
             type: 'vector',
-            tiles: ["https://texty.github.io/covid_schools_map/tiles/schools_covid/{z}/{x}/{y}.pbf"]
+            tiles: ["https://texty.github.io/covid_schools_map/tiles/schools_ukraine/{z}/{x}/{y}.pbf"]
         });
 
 
