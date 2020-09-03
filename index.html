@@ -43,13 +43,15 @@
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.css'  type='text/css'/>
     <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
     <link rel="stylesheet" href="css/styles.css"/>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
     <script type="text/javascript" src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.min.js"></script>
-    <script src="lib/d3v5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
 </head>
 <style>
 
@@ -101,7 +103,7 @@
         <div class="legend-wrapper">
             <p><span>0</span>
                 <span id="legend1"></span>
-                <span>27</span>
+                <span>10+</span>
             </p>
         </div>
 
@@ -112,11 +114,11 @@
             <div class="map_button" value="MAP_cleaned_infections500">школи на 500 учнів</div>
             <div class="map_button active" value="MAP_cleaned_infections1000">школи на 1000 учнів</div>
         </div>
-
     </div>
 
-    <div id="map2_wrapper"  class="map_wrapper">
 
+
+    <div id="map2_wrapper"  class="map_wrapper">
         <h2>Кількість потенційно інфікованих по районах (Київ)</h2>
 
         <!-- карта -->
@@ -126,7 +128,7 @@
         <div class="legend-wrapper">
             <p><span>0</span>
                 <span id="legend2"></span>
-                <span>27</span>
+                <span>10+</span>
             </p>
         </div>
 
@@ -148,8 +150,9 @@
             <tr>
                 <th>Населений пункт</th>
                 <th>Назва школи</th>
-                <th>Потенційна кількість інфікованих</th>
                 <th>Розмір школи</th>
+                <th>Потенційна кількість інфікованих</th>
+
             </tr>
         </thead>
     </table>
@@ -160,7 +163,7 @@
 
 
     <!-- велика таблиця -->
-    <h2>Оберіть свою область:
+    <h3>Оберіть свою область:
     <select id="region-to-show">
         <option value="м. Київ">м. Київ</option>
         <option value="Вінницька">Вінницька</option>
@@ -188,15 +191,16 @@
         <option value="Чернігівська">Чернігівська</option>
         <option value="Черновецька">Черновецька</option>
     </select>
-    </h2>
+    </h3>
 
     <table id="schools" class="responsive">
         <thead>
         <tr>
             <th>Район</th>
             <th>Назва школи</th>
-            <th>Потенційна кількість інфікованих</th>
             <th>Розмір школи</th>
+            <th>Потенційна кількість інфікованих</th>
+
 
         </tr>
         </thead>
@@ -286,6 +290,7 @@
     </div>
 </footer>
 
+<script src="lib/d3v5.min.js"></script>
 <script src="js/map.js"></script>
 
 

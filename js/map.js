@@ -8,18 +8,16 @@ var stops_values = [
     [-3, 'white'],
     [-1, '#d3d3d3'],
     [0, '#ffffff'],
-    [1, '#ffffcc'],
-    [2, '#ffeda0'],
-    [3, "#fed976"],
-    [5, "#feb24c"],
-    [8, "#fd8d3c"],
-    [12, "#fc4e2a"],
-    [16, "#e31a1c"],
-    [20, "#bd0026"],
-    [23, "#800026"]
+    [1, '#ffffb2'],
+    [2, '#fed976'],
+    [3, "#feb24c"],
+    [6, "#fd8d3c"],
+    [8, "#f03b20"],
+    [10, "#bd0026"]
 ];
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZHJpbWFjdXMxODIiLCJhIjoiWGQ5TFJuayJ9.6sQHpjf_UDLXtEsz8MnjXw';
+
 var map = new mapboxgl.Map({
     container: 'map',
     minZoom: default_zoom_u,
@@ -27,7 +25,7 @@ var map = new mapboxgl.Map({
     hash: false,
     tap: false,
     attributionControl: false,
-    style: 'dark_matter.json',
+    style: 'https://raw.githubusercontent.com/texty/covid_schools_map/master/dark_matter.json',
     center: [31.5, 48.5],
     zoom: default_zoom_u // starting zoom
 });
@@ -40,7 +38,7 @@ var map2 = new mapboxgl.Map({
     hash: false,
     tap: false,
     attributionControl: false,
-    style: 'dark_matter.json',
+    style: 'https://raw.githubusercontent.com/texty/covid_schools_map/master/dark_matter.json',
     center: [30.5, 50.4],
     zoom: default_zoom_k // starting zoom
 });
@@ -50,13 +48,23 @@ map2.scrollZoom.disable();
 
 
 Promise.all([
-    d3.csv("data/TABLE.csv"),
-    d3.csv("data/smallTable.csv")
+    d3.csv("https://raw.githubusercontent.com/texty/covid_schools_map/master/data/TABLE.csv"),
+    d3.csv("https://raw.githubusercontent.com/texty/covid_schools_map/master/data/smallTable.csv")
 ]).then(function(data) {
 
     data[0].forEach(function(d){
         d.pot_infections = +d.pot_infections;
     });
+
+    var layers = map.getStyle().layers;
+    var firstSymbolId;
+
+    for (var i = 0; i < layers.length; i++) {
+        if (layers[i].type === 'symbol') {
+            firstSymbolId = layers[i].id;
+            break;
+        }
+    }
 
 
     /* ------- карта України ------- */
@@ -82,10 +90,25 @@ Promise.all([
                         property: choropleth_column,
                         stops: stops_values
                     },
-                    'fill-outline-color': 'lightgrey'
+
+
+                    'fill-outline-color': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                        "grey",
+                        "lightgrey"
+                    ]
                 }
-            });
+            }, firstSymbolId);
         }
+
+        map.on('click', 'schools_data', function(e) {
+           map.getCanvas().style.cursor = 'pointer';
+           new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(e.features[0].properties.MAP_cleaned_registration_region)
+                .addTo(map);
+        });
 
         redrawUkraineMap('MAP_cleaned_infections1000');
 
@@ -135,6 +158,14 @@ Promise.all([
             });
         }
 
+        map2.on('click', 'schools_kyiv', function(e) {
+            map.getCanvas().style.cursor = 'pointer';
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(e.features[0].properties.NAME_2)
+                .addTo(map2);
+        });
+
 
         redrawKyivMap('KYIV_infections1000');
 
@@ -152,7 +183,7 @@ Promise.all([
                  d3.select("#spinner").remove();
              }
          }        //
-        
+
         map.on('sourcedata', sourceCallback);
 
     });
@@ -171,8 +202,9 @@ Promise.all([
         columns: [
             { data: "Населений пункт"},
             { data: "Назва школи" },
-            { data: "Потенційна кількість інфікованих" },
-            { data: "Розмір школи" }
+            { data: "Розмір школи" },
+            { data: "Потенційна кількість інфікованих" }
+           
 
         ]
     });
@@ -186,8 +218,9 @@ Promise.all([
             return {
                 "Район": d.district_name,
                 "Назва школи": d.school_name,
-                "Потенційна кількість інфікованих": d.pot_infections + " oc.",
-                "Розмір школи": d.tot_people + " oc."
+                "Розмір школи": d.tot_people + " oc.",
+                "Потенційна кількість інфікованих": d.pot_infections + " oc."
+              
                 
             };
         });
@@ -234,49 +267,26 @@ Promise.all([
         });
     });
 
-    // select option  в другу колонку
-    $('#schools thead tr:eq(1) th:eq(3)').each(function (i) {
-        var column = this;
-        var select = $('<select style="width:100%"><option value="" selected>Обрати</option></select>');
-        $(this).html( select );
-        $( 'select', this ).on( 'change', function () {
-            var val = $.fn.dataTable.util.escapeRegex(
-                $(this).val()
-            );
-            datatable.column(3)
-                .search( this.value )
-                .draw();
-        });
-        datatable.column(3).data().unique().each( function ( d) {
-            select.append('<option value="'+d+'">'+d+'</option>')
-        });
-    });
-
 
     $('#schools thead tr:eq(1) th:eq(1)')
-        .each(function () {
+        // '#schools thead tr:eq(1) th:eq(2), ' +
+        // '#schools thead tr:eq(1) th:eq(3)')
+        .each(function (i) {
             $(this).html( '<input type="text" placeholder="Пошук" />' );
             $( 'input', this ).on( 'keyup change', function () {
-                if (datatable.column(1).search() !== this.value ) {
+                if (datatable.column(i + 1).search() !== this.value ) {
                     datatable
-                        .column(1)
+                        .column(i + 1)
                         .search( this.value )
                         .draw();
                 }
             });
         });
 
-    $('#schools thead tr:eq(1) th:eq(2)')
-        .each(function () {
-            $(this).html( '<input type="text" placeholder="Пошук" />' );
-            $( 'input', this ).on( 'keyup change', function () {
-                if (datatable.column(2).search() !== this.value ) {
-                    datatable
-                        .column(2)
-                        .search( this.value )
-                        .draw();
-                }
-            });
+
+$('#schools thead tr:eq(1) th:eq(2), ' +
+    '#schools thead tr:eq(1) th:eq(3)').each(function(){
+        d3.select(this).html("")
     });
 
    /*---  змінюємо таблицю по селекту ---*/
@@ -288,12 +298,30 @@ Promise.all([
                return {
                    "Район": d.district_name,
                    "Назва школи": d.school_name,
-                   "Потенційна кількість інфікованих": d.pot_infections + " oc.",
-                   "Розмір школи": d.tot_people + " oc."
+                   "Розмір школи": d.tot_people + " oc.",
+                   "Потенційна кількість інфікованих": d.pot_infections + " oc."                   
                };
            });
        datatable.clear();
        datatable.rows.add(filtered).draw();
+
+       // select option  в другу колонку
+       $('#schools thead tr:eq(1) th:eq(0)').each(function (i) {
+           var column = this;
+           var select = $('<select style="width:100%"><option value="" selected>Обрати</option></select>');
+           $(this).html( select );
+           $( 'select', this ).on( 'change', function () {
+               var val = $.fn.dataTable.util.escapeRegex(
+                   $(this).val()
+               );
+               datatable.column(i)
+                   .search( this.value )
+                   .draw();
+           });
+           datatable.column(i).data().unique().sort(function(a,b){ return d3.ascending(a, b) }).each( function (d) {
+               select.append('<option value="'+d+'">'+d+'</option>')
+           });
+       });
    });
     
 });
